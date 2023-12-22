@@ -5,36 +5,31 @@ from watchdog.events import FileSystemEventHandler
 # Путь к файлу для анализа
 file_path = '/tmp/openvpn-status.log'
 
-# Функция для подсчета вхождений строки "CLIENT_LIST"
-def count_client_list_occurrences(file_path):
+def read_file_content():
     try:
         with open(file_path, 'r') as file:
             content = file.read()
-            count = content.count('CLIENT_LIST')
-            print(f'Количество вхождений "CLIENT_LIST": {count}')
-            return count
+            print(content)
     except FileNotFoundError:
-        print("Файл не найден")
+        print(f"Файл {file_path} не найден.")
 
-# Класс обработчика событий файловой системы
 class FileModifiedHandler(FileSystemEventHandler):
     def on_modified(self, event):
-        if event.src_path == file_path:
-            print('Файл был изменен!')
-            count_client_list_occurrences(file_path)
+        if event.src_path == file_path and event.is_directory is False:
+            print(f"Файл {file_path} был изменен.")
+            read_file_content()
 
-# Создание наблюдателя за файлами
-event_handler = FileModifiedHandler()
-observer = Observer()
-observer.schedule(event_handler, path='.', recursive=False)
-observer.start()
+if __name__ == "__main__":
+    read_file_content()
 
-try:
-    while True:
-        time.sleep(1)
-except KeyboardInterrupt:
-    observer.stop()
+    event_handler = FileModifiedHandler()
+    observer = Observer()
+    observer.schedule(event_handler, path='/tmp', recursive=False)
+    observer.start()
 
-observer.join()
-
-# k delete po app --force --grace-period 0 && k apply -f https://raw.githubusercontent.com/IgorVityukhovsky/workvpn-log-app/main/app.yml
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
