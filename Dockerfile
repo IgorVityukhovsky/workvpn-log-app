@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-alpine
 COPY count_connections.py /usr/src/app/count_connections.py
 WORKDIR /usr/src/app
 CMD ["python", "count_connections.py"]
