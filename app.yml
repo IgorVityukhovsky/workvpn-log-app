@@ -12,7 +12,7 @@ spec:
     resources: {}
     env:
     - name: PYTHONUNBUFFERED
-      value: 1
+      value: "1"
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
