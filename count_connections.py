@@ -3,7 +3,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 # Путь к файлу для анализа
-file_path = 'путь_к_вашему_файлу.txt'
+file_path = '/tmp/openvpn-status.log'
 
 # Функция для подсчета вхождений строки "CLIENT_LIST"
 def count_client_list_occurrences(file_path):
