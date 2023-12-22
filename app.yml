@@ -10,6 +10,14 @@ spec:
   - image: igorvit/count_connections:1.2
     name: app
     resources: {}
+    volumeMounts:
+    - name: pvc-logs
+      mountPath: /tmp/
+  volumes:
+    - name: pvc-logs
+      persistentVolumeClaim:
+        claimName: pvc-logs
   dnsPolicy: ClusterFirst
   restartPolicy: Always
+  terminationGracePeriodSeconds: 0
 status: {}
