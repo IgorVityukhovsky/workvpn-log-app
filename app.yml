@@ -10,9 +10,6 @@ spec:
   - image: igorvit/count_connections:1.2
     name: app
     resources: {}
-    env:
-    - name: PYTHONUNBUFFERED
-      value: '1'
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
