@@ -21,7 +21,7 @@ spec:
       - name: pvc-logs
         mountPath: /tmp/
       - name: containers-logs
-        mountPath: /var/log/containers
+        mountPath: /var/log/pods
   - image: igorvit/count_connections:1.5.7
     name: app
     resources: {}
@@ -31,7 +31,7 @@ spec:
   volumes:
     - name: containers-logs
       hostPath:
-        path: /var/log/containers
+        path: /var/log/pods
     - name: pvc-logs
       persistentVolumeClaim:
         claimName: pvc-logs
