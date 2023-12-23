@@ -20,6 +20,8 @@ spec:
         mountPath: /etc/filebeat/
       - name: pvc-logs
         mountPath: /tmp/
+      - name: containers-logs
+        mountPath: /var/log/containers
   - image: igorvit/count_connections:1.5.7
     name: app
     resources: {}
@@ -27,6 +29,9 @@ spec:
     - name: pvc-logs
       mountPath: /tmp/
   volumes:
+    - name: containers-logs
+      hostPath:
+        path: /var/log/containers
     - name: pvc-logs
       persistentVolumeClaim:
         claimName: pvc-logs
