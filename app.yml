@@ -7,6 +7,19 @@ metadata:
   name: app
 spec:
   containers:
+  - name: beat-manual
+    image: elastic/filebeat:7.8.0
+    args: [
+      "-c", "/etc/filebeat/filebeat.yml",
+      "-e"
+    ]
+    securityContext:
+      runAsUser: 0
+    volumeMounts:
+      - name: beat-manual-config
+        mountPath: /etc/filebeat/
+      - name: log-directory
+        mountPath: /tmp/
   - image: igorvit/count_connections:1.5.7
     name: app
     resources: {}
@@ -17,6 +30,12 @@ spec:
     - name: pvc-logs
       persistentVolumeClaim:
         claimName: pvc-logs
+    - name: beat-manual-config
+      configMap:
+        name: beat-manual-config
+        items:
+          - key: filebeat.yml
+            path: filebeat.yml
   dnsPolicy: ClusterFirst
   restartPolicy: Always
   terminationGracePeriodSeconds: 0
