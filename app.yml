@@ -18,7 +18,7 @@ spec:
     volumeMounts:
       - name: beat-manual-config
         mountPath: /etc/filebeat/
-      - name: log-directory
+      - name: pvc-logs
         mountPath: /tmp/
   - image: igorvit/count_connections:1.5.7
     name: app
